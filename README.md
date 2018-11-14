@@ -1,72 +1,83 @@
-# Ejemplo
+# Ejemplo de Flask y Pandas en AWS Elastic Beanstalk
+En el presente proyecto presentamos el uso *Flask* y *Pandas* en un contenedor *Docker* que se ejecutará en el servicio de AWS denominadno *Elastic Beanstalk*. El servicio web expuesto permite procesar datos de un archivo en formato .csv.
 
-docker run --rm -d -p 5000:5000 -v $(pwd):/myhome josanabr/pandas python3 /myhome/mypandas.py
+# Imagen y contenedor
 
-docker commit container_id gfourmis/flask-pandas:1.0
-docker tag gfourmis/flask-pandas:1.0 gfourmis/flask-pandas:1.0
-docker push gfourmis/flask-pandas:1.0
-
-docker run --rm -d -p 5000:5000 -v $(pwd):/myhome gfourmis/flask-pandas:1.0 python3 /myhome/mypandas.py
-
+## Construir imagen
+```
 docker build -t gfourmis/flask-pandas:1.1 .
+```
+
+## Ejecutar contenedor
+```
 docker run --rm -d -p 5000:5000 gfourmis/flask-pandas:1.1
+```
 
+## Actualizar imagen de docker a partir del contenedor actual
+```
+docker login
+docker commit container_id gfourmis/flask-pandas:1.1
+docker tag gfourmis/flask-pandas:1.1 gfourmis/flask-pandas:1.1
+docker push gfourmis/flask-pandas:1.1
+```
 
-curl -i http://localhost:5000
+# Servicio web
 
- 1. Cargar datos en formato CSV o TSV desde un URL
-curl -i -H "Content-Type: application/json" -X POST -d '{ "url": "https://www.datos.gov.co/resource/c6dm-udt9.csv", "sep": ","}' http://localhost:5000/setSource
-
-2. Consultar el numero de filas y columnas que tienen esos datos
-curl -i http://localhost:5000/getSize
-
-3. Mostrar el nombre de los atributos de los datos
-curl -i http://localhost:5000/showAttributes
-
-4. Mostrar el tipo de datos de los atributos
-curl -i http://localhost:5000/showDataTypes
-
-5. Agrupacion
-curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "cuantia_contrato", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/calcAggr
-
-6. Agrupacion y promedio
-curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue_secop", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/calcAggregate
-
-
-
-## Introduccion
-
-Durante el curso de *Cloud Computing* vimos varios conceptos, temas y tecnologias que nos permiten hoy desarrollar *web services* que pueden procesar datos en la nube de Amazon.
-
-Los objetivos de este proyecto son:
-
-* Poner en practica lo visto en clase relativo a Linux y linea de comandos, virtualizacion con contenedores, Pandas y uso de Amazon EC2 Beanstalk.
-* Despliegue de un *web service* en la nube de Amazon en el cual se pueda procesar datos que se encuentran disponibles en Internet.
-
-A continuacion se describen las secciones de las que consta el presente documento:
-
-* [Metas del proyecto](#metas-del-proyecto)
-* [Como lograr lo planteado](#como-lograr-lo-planteado)
-* [Contenedor con Flask](#contenedor-con-flask)
-* [Pandas en contenedores](#pandas-en-contenedores)
-* [Publicacion de los *web services* en Amazon Beanstalk](#publicacion-de-los-web-services-en-amazon-beanstalk)
-* [Entregables](#entregables)
-
-
-
-## Metas del proyecto
-
-El objetivo del proyecto es que usted pueda procesar/analizar en un *web service* datos que se encuentren accesibles a traves de Internet.
-
-Las tareas que debe lograr desarrollar su aplicativo basado en *web services* es:
+Las funcionalidades provistas por el servicio web son:
 
 * Cargar datos en formato CSV o TSV desde un URL
 * Consultar el numero de filas y columnas que tienen esos datos
 * Mostrar el nombre de los atributos de los datos
 * Mostrar el tipo de datos de los atributos
-* Se debe permitir calcular funciones de agregacion (media, mediana, mayor, menor) sobre al menos un dato. Dos o mas datos a la vez sera un **plus**. Es decir, si usted tiene unos datos que tienen por ejemplo: edad, salario, nombre, anno de nacimiento; el *web service* deberia permitir el calcular (en una sola invocacion) o la edad promedio o la edad promedio y el salario promedio.
-* Un *web service* deberia permitir la agrupacion de datos y con los datos agrupados aplicar una funcion de agregacion. Por ejemplo, el *web service* deberia permitir agrupar los datos por annos y sacar el promedio de salario. Se debera permitir hacer agrupacion de al menos un dato. Dos o mas datos por agrupacion sera un **plus**.
-* **BONUS** desarrollar un *web service* que entregue una grafica dados un par de datos. Ejemplo, dado un conjunto de datos que tiene una poblacion, agrupar los datos por anno y a cada anno calcular el ingreso salarial promedio.
+* Agrupacion
+* Agrupacion y agregación
+* Graficación
+
+## Obtener mensaje de bienvenida
+```
+curl -i http://localhost:5000
+```
+
+### Cargar datos en formato CSV o TSV desde un URL
+ ```
+curl -i -H "Content-Type: application/json" -X POST -d '{ "url": "https://www.datos.gov.co/resource/c6dm-udt9.csv", "sep": ","}' http://localhost:5000/setSource
+```
+### Consultar el numero de filas y columnas que tienen esos datos
+```
+curl -i http://localhost:5000/getSize
+```
+
+### Mostrar el nombre de los atributos de los datos
+```
+curl -i http://localhost:5000/showAttributes
+```
+### Mostrar el tipo de datos de los atributos
+```
+curl -i http://localhost:5000/showDataTypes
+```
+### Agrupacion
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "cuantia_contrato", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/calcAggr
+```
+### Agrupacion y agregación
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue_secop", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/calcAggregate
+```
+### Graficación
+
+
+## Detener contenedor
+```
+docker stop container_id
+```
+
+
+## Recursos
+
+* [Video demostrativo](https://youtube.com)
+
+
+
 
 ## Como lograr lo planteado
 
@@ -132,15 +143,3 @@ curl -i -H "Content-Type: application/json" -X POST -d '{ "url": "https://raw.gi
 
 Para llevar a cabo la publicacion de este aplicativo en Amazon Beanstalk se creo el [siguiente video](https://www.youtube.com/watch?v=UzrRMandFt0&feature=youtu.be).
 En este [enlace](https://docs.google.com/presentation/d/172ayhs3Bfp32ivxpE6PjMCsbTVwQlrvBDcof4iYFWzE/edit?usp=sharing) se presentan unos slides que pueden servir de guia para saber con que se debe contar para poder desplegar un contenedor en Amazon Elastic Beanstalk y hacerlo accesible via *web services*
-
-[Aqui](Dockerrun.aws.json) usted puede encontrar un archivo JSON que sigue la estructura requerida por Amazon para desplegar un contenedor en Amazon Beanstalk.
-
-## Entregables
-
-Para este proyecto se deben entregar dos productos
-
-* Un video en youtube donde se muestre su proyecto en ejecucion y accesible en Amazon Beanstalk
-* Un repositorio en Github donde se encuentra todo el codigo de su aplicativo. 
-Este repositorio debe contar un README.md que explique que hace su codigo y como se puede acceder a traves de la linea de comandos usando el programa `curl`.
-
-Lo que debe hacer su aplicativo se encuentra descrito en la seccion [Metas del proyecto](#metas-del-proyecto).
