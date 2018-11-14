@@ -1,4 +1,38 @@
-# Proyecto Final 
+# Ejemplo
+
+docker run --rm -d -p 5000:5000 -v $(pwd):/myhome josanabr/pandas python3 /myhome/mypandas.py
+
+docker commit container_id gfourmis/flask-pandas:1.0
+docker tag gfourmis/flask-pandas:1.0 gfourmis/flask-pandas:1.0
+docker push gfourmis/flask-pandas:1.0
+
+docker run --rm -d -p 5000:5000 -v $(pwd):/myhome gfourmis/flask-pandas:1.0 python3 /myhome/mypandas.py
+
+docker build -t gfourmis/flask-pandas:1.1 .
+docker run --rm -d -p 5000:5000 gfourmis/flask-pandas:1.1
+
+
+curl -i http://localhost:5000
+
+ 1. Cargar datos en formato CSV o TSV desde un URL
+curl -i -H "Content-Type: application/json" -X POST -d '{ "url": "https://www.datos.gov.co/resource/c6dm-udt9.csv", "sep": ","}' http://localhost:5000/setSource
+
+2. Consultar el numero de filas y columnas que tienen esos datos
+curl -i http://localhost:5000/getSize
+
+3. Mostrar el nombre de los atributos de los datos
+curl -i http://localhost:5000/showAttributes
+
+4. Mostrar el tipo de datos de los atributos
+curl -i http://localhost:5000/showDataTypes
+
+5. Agrupacion
+curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "cuantia_contrato", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/calcAggr
+
+6. Agrupacion y promedio
+curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue_secop", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/calcAggregate
+
+
 
 ## Introduccion
 
