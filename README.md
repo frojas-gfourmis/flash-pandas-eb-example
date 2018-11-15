@@ -78,5 +78,7 @@ docker stop container_id
 
 ## Recursos
 
-* [Video demostrativo](https://youtube.com)
-* [Imagen de docker](https://hub.docker.com/r/gfourmis/flask-pandas/)
+* [Video: Ejecución de contenedor Docker en AWS Elastic Beanstalk](https://youtu.be/OWG4yJlmL2A)
+* [Video: Ejecución de contenedor Docker en local - Flask + Pandas](https://youtu.be/DMJqFnSn8Ps)
+* [Video: Actualización de repositorio en GitHub y Docker - Flask + Pandas](https://youtu.be/DKwpua179TQ)
+* [Imagen docker: Flask + Pandas](https://hub.docker.com/r/gfourmis/flask-pandas/)
