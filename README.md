@@ -64,7 +64,9 @@ curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "cuantia_con
 curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue_secop", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/calcAggregate
 ```
 ### Graficación
-
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue_secop", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/plotFigure
+```
 
 ## Detener contenedor
 ```
