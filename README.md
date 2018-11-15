@@ -76,7 +76,7 @@ curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue
 docker stop container_id
 ```
 
-
 ## Recursos
 
 * [Video demostrativo](https://youtube.com)
+* [Imagen de docker](https://hub.docker.com/r/gfourmis/flask-pandas/)
