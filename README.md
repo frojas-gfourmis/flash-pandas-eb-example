@@ -67,6 +67,9 @@ curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue
 ```
 curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue_secop", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/plotFigure
 ```
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{ "field1": "anno_cargue_secop", "field2": "plazo_de_ejec_del_contrato"}' http://localhost:5000/downloadPlotFigure
+```
 
 ## Detener contenedor
 ```
